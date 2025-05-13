@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Radio Bruno Perú</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #eef2f3;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 25px;
+      color: #333;
+      font-size: 20px;
+    }
+
+    .radio-container {
+      margin: 8px 0;
+    }
+
+    button {
+      width: 160px;
+      height: 40px;
+      font-size: 14px;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: bold;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    #toggle-nueva-q {
+      background-color: #e91e63;
+    }
+
+    #toggle-exitosa {
+      background-color: #ff9800;
+    }
+
+    #toggle-rpp {
+      background-color: #2196f3;
+    }
+
+    .volume-control {
+      margin-top: 20px;
+    }
+
+    .volume-control input {
+      width: 100%;
+    }
+
+    footer {
+      margin-top: 25px;
+      font-size: 13px;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>📻 Radio Bruno Perú</h1>
+
+    <div class="radio-container">
+      <button id="toggle-nueva-q">▶ Nueva Q</button>
+      <audio id="radio-nueva-q" preload="none"></audio>
+    </div>
+
+    <div class="radio-container">
+      <button id="toggle-exitosa">▶ Exitosa</button>
+      <audio id="radio-exitosa" preload="none"></audio>
+    </div>
+
+    <div class="radio-container">
+      <button id="toggle-rpp">▶ RPP</button>
+      <audio id="radio-rpp" preload="none"></audio>
+    </div>
+
+    <div class="volume-control">
+      <label for="volume">🔊 Volumen:</label>
+      <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+    </div>
+
+    <footer>
+      Desarrollado por <strong>Bruno</strong> - App: <strong>Radio Bruno Perú</strong>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const radios = {
+        nuevaQ: {
+          audio: document.getElementById('radio-nueva-q'),
+          button: document.getElementById('toggle-nueva-q'),
+          url: "https://playerservices.streamtheworld.com/api/livestream-redirect/CRP_NQ.mp3",
+          nombre: "Nueva Q",
+          color: "#e91e63"
+        },
+        exitosa: {
+          audio: document.getElementById('radio-exitosa'),
+          button: document.getElementById('toggle-exitosa'),
+          url: "https://neptuno-2-audio.mediaserver.digital/79525baf-b0f5-4013-a8bd-3c5c293c6561",
+          nombre: "Exitosa",
+          color: "#ff9800"
+        },
+        rpp: {
+          audio: document.getElementById('radio-rpp'),
+          button: document.getElementById('toggle-rpp'),
+          url: "https://us-b4-p-e-zs14-audio.cdn.mdstrm.com/live-audio-aw/5fab3416b5f9ef165cfab6e9?aid=5faaeb72f92d7b07dfe10181&property=garden&pid=BAXqPlJOK1KXGB7hpW7Ffx43BLnTGx7f&sid=HeF3QaPUSHuix51lp2vwndCqXnJurCJJ&uid=AkuDJQHu7TJzw4RruJ11sKyXHeMg5Tyh&es=us-b4-p-e-zs14-audio.cdn.mdstrm.com&ote=1747241876468&ot=lCNJ7CB3I5fLBh5DeK0-3Q&proto=https&pz=us&cP=128000&awCollectionId=5faaeb72f92d7b07dfe10181&aw_0_1st.playerId=garden&liveId=5fab3416b5f9ef165cfab6e9&referer=https%3A%2F%2Fradio.garden%2F&propertyName=garden&propertyType=rss-app&listenerId=AkuDJQHu7TJzw4RruJ11sKyXHeMg5Tyh",
+          nombre: "RPP",
+          color: "#2196f3"
+        }
+      };
+
+      const volume = document.getElementById('volume');
+      Object.values(radios).forEach(r => r.audio.volume = volume.value);
+      volume.addEventListener('input', () => {
+        Object.values(radios).forEach(r => r.audio.volume = volume.value);
+      });
+
+      function detenerRadio(radio, callback) {
+        radio.button.disabled = true;
+        radio.button.textContent = "Deteniendo...";
+        radio.audio.pause();
+        radio.audio.currentTime = 0;
+        radio.audio.src = "";
+        setTimeout(() => {
+          radio.button.textContent = `▶ ${radio.nombre}`;
+          radio.button.style.backgroundColor = radio.color;
+          radio.button.disabled = false;
+          if (callback) callback();
+        }, 600);
+      }
+
+      function manejarReproduccion(radioKey) {
+        const actual = radios[radioKey];
+        const otras = Object.keys(radios).filter(k => k !== radioKey).map(k => radios[k]);
+
+        if (actual.audio.paused) {
+          actual.button.disabled = true;
+          actual.button.textContent = "Conectando...";
+
+          Promise.all(otras.map(r =>
+            !r.audio.paused ? new Promise(res => detenerRadio(r, res)) : Promise.resolve()
+          )).then(() => {
+            setTimeout(() => {
+              actual.audio.src = actual.url;
+              actual.audio.load();
+              actual.audio.play()
+                .then(() => {
+                  actual.button.textContent = `⏸ ${actual.nombre}`;
+                  actual.button.style.backgroundColor = "#4CAF50";
+                  actual.button.disabled = false;
+                })
+                .catch(error => {
+                  alert("Error al reproducir " + actual.nombre + ": " + error.message);
+                  actual.button.textContent = `▶ ${actual.nombre}`;
+                  actual.button.disabled = false;
+                });
+            }, 300);
+          });
+        } else {
+          detenerRadio(actual);
+        }
+      }
+
+      radios.nuevaQ.button.addEventListener('click', () => manejarReproduccion('nuevaQ'));
+      radios.exitosa.button.addEventListener('click', () => manejarReproduccion('exitosa'));
+      radios.rpp.button.addEventListener('click', () => manejarReproduccion('rpp'));
+    });
+  </script>
+</body>
+</html>
