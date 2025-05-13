@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Radio Bruno Perú</title>
   <style>
     body {
@@ -17,7 +18,7 @@
 
     .container {
       background-color: #fff;
-      padding: 30px 40px;
+      padding: 30px 20px;
       border-radius: 15px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       max-width: 420px;
@@ -32,7 +33,7 @@
     }
 
     .radio-container {
-      margin: 8px 0;
+      margin: 10px 0;
     }
 
     button {
@@ -52,24 +53,18 @@
       cursor: not-allowed;
     }
 
-    #toggle-nueva-q {
-      background-color: #e91e63;
-    }
-
-    #toggle-exitosa {
-      background-color: #ff9800;
-    }
-
-    #toggle-rpp {
-      background-color: #2196f3;
-    }
+    #toggle-nueva-q { background-color: #e91e63; }
+    #toggle-exitosa { background-color: #ff9800; }
+    #toggle-rpp { background-color: #2196f3; }
 
     .volume-control {
       margin-top: 20px;
+      text-align: center;
     }
 
     .volume-control input {
-      width: 100%;
+      width: 80%;
+      max-width: 300px;
     }
 
     footer {
@@ -77,10 +72,21 @@
       font-size: 13px;
       color: #777;
     }
+
+    @media (max-width: 768px) {
+      button {
+        width: 80%;
+        height: 50px;
+        font-size: 16px;
+      }
+
+      .volume-control input {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
-
   <div class="container">
     <h1>📻 Radio Bruno Perú</h1>
 
@@ -100,7 +106,7 @@
     </div>
 
     <div class="volume-control">
-      <label for="volume">🔊 Volumen:</label>
+      <label for="volume">🔊 Volumen:</label><br>
       <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
     </div>
 
@@ -162,7 +168,6 @@
         if (actual.audio.paused) {
           actual.button.disabled = true;
           actual.button.textContent = "Conectando...";
-
           Promise.all(otras.map(r =>
             !r.audio.paused ? new Promise(res => detenerRadio(r, res)) : Promise.resolve()
           )).then(() => {
