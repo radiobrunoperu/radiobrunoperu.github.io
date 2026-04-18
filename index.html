@@ -1,202 +1,142 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Radio Bruno Perú</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #eef2f3;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio Bruno Perú - Emisoras en Vivo</title>
+    <style>
+        :root { --bg: #f0f2f5; --card: #ffffff; --primary: #2c3e50; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--primary); margin: 0; padding: 20px; padding-bottom: 150px; }
+        
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { color: #e74c3c; font-size: 32px; margin-bottom: 5px; }
+        
+        /* Ajuste de espacios para que se vea ordenado */
+        .radio-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+            gap: 20px; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            justify-items: center; /* Centra las tarjetas en su celda */
+        }
 
-    .container {
-      background-color: #fff;
-      padding: 30px 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      max-width: 420px;
-      width: 90%;
-      text-align: center;
-    }
+        .radio-card { 
+            background: var(--card); 
+            border-radius: 12px; 
+            padding: 15px; 
+            text-align: center; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
+            cursor: pointer; 
+            transition: 0.3s; 
+            border: 1px solid #ddd;
+            display: flex; flex-direction: column; align-items: center;
+            width: 130px; /* Tamaño fijo para que todas sean iguales */
+        }
 
-    h1 {
-      margin-bottom: 25px;
-      color: #333;
-      font-size: 20px;
-    }
+        .radio-card:hover { transform: translateY(-5px); border-color: #e74c3c; box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
+        
+        /* Ajuste de tamaño de logos para que no se rompa el espacio */
+        .radio-card img { width: 85px; height: 85px; object-fit: contain; margin-bottom: 10px; }
+        .radio-name { font-weight: bold; font-size: 13px; color: #333; }
 
-    .radio-container {
-      margin: 10px 0;
-    }
-
-    button {
-      width: 160px;
-      height: 40px;
-      font-size: 14px;
-      border: none;
-      border-radius: 8px;
-      color: #fff;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-weight: bold;
-    }
-
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    #toggle-nueva-q { background-color: #e91e63; }
-    #toggle-exitosa { background-color: #ff9800; }
-    #toggle-rpp { background-color: #2196f3; }
-
-    .volume-control {
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    .volume-control input {
-      width: 80%;
-      max-width: 300px;
-    }
-
-    footer {
-      margin-top: 25px;
-      font-size: 13px;
-      color: #777;
-    }
-
-    @media (max-width: 768px) {
-      button {
-        width: 80%;
-        height: 50px;
-        font-size: 16px;
-      }
-
-      .volume-control input {
-        width: 100%;
-      }
-    }
-  </style>
+        .player-bar { 
+            position: fixed; bottom: 0; left: 0; width: 100%; 
+            background: #1a1a1a; color: white; padding: 20px; 
+            text-align: center; box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
+            box-sizing: border-box;
+        }
+        #status { font-size: 14px; margin-bottom: 12px; color: #00ffcc; font-weight: bold; }
+        .controls { display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        
+        .btn-stop { background: #e74c3c; color: white; border: none; padding: 10px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .btn-stop:hover { background: #c0392b; }
+        
+        input[type=range] { width: 150px; accent-color: #e74c3c; cursor: pointer; }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>📻 Radio Bruno Perú</h1>
 
-    <div class="radio-container">
-      <button id="toggle-nueva-q">▶ Nueva Q</button>
-      <audio id="radio-nueva-q" preload="none"></audio>
+<div class="header">
+    <h1>📻 RADIO BRUNO PERÚ</h1>
+    <p>Las mejores emisoras en vivo con el mejor sonido</p>
+</div>
+
+<div class="radio-grid">
+    <div class="radio-card" onclick="play('https://18493.live.streamtheworld.com/RADIO_NUEVA_Q_SC', 'Nueva Q')">
+        <img src="https://scr.crp.pe/as/images/logos/logo_nuevaq.png" alt="Nueva Q">
+        <div class="radio-name">Nueva Q</div>
     </div>
-
-    <div class="radio-container">
-      <button id="toggle-exitosa">▶ Exitosa</button>
-      <audio id="radio-exitosa" preload="none"></audio>
+    <div class="radio-card" onclick="play('https://strm112.1vps.es/8124/stream', 'Exitosa')">
+        <img src="https://exitosanoticias.pe/images/logonew.png" alt="Exitosa" style="background:#e74c3c; padding:5px; border-radius:5px;">
+        <div class="radio-name">Exitosa</div>
     </div>
-
-    <div class="radio-container">
-      <button id="toggle-rpp">▶ RPP</button>
-      <audio id="radio-rpp" preload="none"></audio>
+    <div class="radio-card" onclick="play('https://17503.live.streamtheworld.com/RADIO_RPP_SC', 'RPP Noticias')">
+        <img src="https://rpp.pe/img/logo-rpp.png" alt="RPP" style="background:#1a1a1a; padding:5px; border-radius:5px;">
+        <div class="radio-name">RPP Noticias</div>
     </div>
-
-    <div class="volume-control">
-      <label for="volume">🔊 Volumen:</label><br>
-      <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+    <div class="radio-card" onclick="play('https://19313.live.streamtheworld.com/PANAMERICANA_SC', 'Radio Panamericana')">
+        <img src="https://scr.crp.pe/as/images/logos/logo_panamericana.png" alt="Panamericana">
+        <div class="radio-name">Panamericana</div>
     </div>
+    <div class="radio-card" onclick="play('https://17513.live.streamtheworld.com/RADIO_OXIGENO_SC', 'Radio Oxígeno')">
+        <img src="https://cdn.oxigeno.com.pe/oxigeno/images/logo-oxigeno.png" alt="Oxígeno" style="background:#333; padding:5px; border-radius:5px;">
+        <div class="radio-name">Oxígeno</div>
+    </div>
+    <div class="radio-card" onclick="play('https://18313.live.streamtheworld.com/RADIO_STUDIO92_SC', 'Studio 92')">
+        <img src="https://cdn.studio92.com/studio92/images/logo-s92.png" alt="Studio 92" style="background:#1a1a1a; padding:5px; border-radius:5px;">
+        <div class="radio-name">Studio 92</div>
+    </div>
+    <div class="radio-card" onclick="play('https://19253.live.streamtheworld.com/RADIO_INOLVIDABLE_SC', 'La Inolvidable')">
+        <img src="https://scr.crp.pe/as/images/logos/logo_lainolvidable.png" alt="La Inolvidable">
+        <div class="radio-name">La Inolvidable</div>
+    </div>
+    <div class="radio-card" onclick="play('https://18323.live.streamtheworld.com/RADIO_FELICIDAD_SC', 'Felicidad')">
+        <img src="https://scr.crp.pe/as/images/logos/logo_felicidad.png" alt="Felicidad">
+        <div class="radio-name">Felicidad</div>
+    </div>
+    <div class="radio-card" onclick="play('https://19223.live.streamtheworld.com/RADIO_MAGICA_SC', 'Radio Mágica')">
+        <img src="https://scr.crp.pe/as/images/logos/logo_magica.png" alt="Mágica">
+        <div class="radio-name">Mágica</div>
+    </div>
+    <div class="radio-card" onclick="play('https://stream-54.zeno.fm/5f0m7w6m768uv', 'A1 Cañete')">
+        <img src="https://radioa1.pe/wp-content/uploads/2021/02/LOGO-A1-PNG-1.png" alt="A1">
+        <div class="radio-name">A1 Cañete</div>
+    </div>
+</div>
 
-    <footer>
-      Desarrollado por <strong>Bruno</strong> - App: <strong>Radio Bruno Perú</strong>
-    </footer>
-  </div>
+<div class="player-bar">
+    <div id="status">HAZ CLIC EN UN LOGO PARA ESCUCHAR</div>
+    <div class="controls">
+        <span>🔈</span>
+        <input type="range" min="0" max="1" step="0.1" value="0.8" oninput="setV(this.value)">
+        <span>🔊</span>
+        <button class="btn-stop" onclick="stop()">DETENER RADIO</button>
+    </div>
+</div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const radios = {
-        nuevaQ: {
-          audio: document.getElementById('radio-nueva-q'),
-          button: document.getElementById('toggle-nueva-q'),
-          url: "https://playerservices.streamtheworld.com/api/livestream-redirect/CRP_NQ.mp3",
-          nombre: "Nueva Q",
-          color: "#e91e63"
-        },
-        exitosa: {
-          audio: document.getElementById('radio-exitosa'),
-          button: document.getElementById('toggle-exitosa'),
-          url: "https://neptuno-2-audio.mediaserver.digital/79525baf-b0f5-4013-a8bd-3c5c293c6561",
-          nombre: "Exitosa",
-          color: "#ff9800"
-        },
-        rpp: {
-          audio: document.getElementById('radio-rpp'),
-          button: document.getElementById('toggle-rpp'),
-          url: "https://us-b4-p-e-zs14-audio.cdn.mdstrm.com/live-audio-aw/5fab3416b5f9ef165cfab6e9?aid=5faaeb72f92d7b07dfe10181&property=garden&pid=BAXqPlJOK1KXGB7hpW7Ffx43BLnTGx7f&sid=HeF3QaPUSHuix51lp2vwndCqXnJurCJJ&uid=AkuDJQHu7TJzw4RruJ11sKyXHeMg5Tyh&es=us-b4-p-e-zs14-audio.cdn.mdstrm.com&ote=1747241876468&ot=lCNJ7CB3I5fLBh5DeK0-3Q&proto=https&pz=us&cP=128000&awCollectionId=5faaeb72f92d7b07dfe10181&aw_0_1st.playerId=garden&liveId=5fab3416b5f9ef165cfab6e9&referer=https%3A%2F%2Fradio.garden%2F&propertyName=garden&propertyType=rss-app&listenerId=AkuDJQHu7TJzw4RruJ11sKyXHeMg5Tyh",
-          nombre: "RPP",
-          color: "#2196f3"
-        }
-      };
+<script>
+    var audio = new Audio();
+    var s = document.getElementById('status');
 
-      const volume = document.getElementById('volume');
-      Object.values(radios).forEach(r => r.audio.volume = volume.value);
-      volume.addEventListener('input', () => {
-        Object.values(radios).forEach(r => r.audio.volume = volume.value);
-      });
+    function play(url, name) {
+        s.innerText = "CONECTANDO A " + name.toUpperCase() + "...";
+        audio.pause();
+        audio.src = url;
+        audio.play().then(() => {
+            s.innerText = "REPRODUCIENDO: " + name.toUpperCase() + " 🔴";
+        }).catch(e => { s.innerText = "ERROR: CLICK DE NUEVO"; });
+    }
 
-      function detenerRadio(radio, callback) {
-        radio.button.disabled = true;
-        radio.button.textContent = "Deteniendo...";
-        radio.audio.pause();
-        radio.audio.currentTime = 0;
-        radio.audio.src = "";
-        setTimeout(() => {
-          radio.button.textContent = `▶ ${radio.nombre}`;
-          radio.button.style.backgroundColor = radio.color;
-          radio.button.disabled = false;
-          if (callback) callback();
-        }, 600);
-      }
+    function stop() {
+        audio.pause();
+        audio.src = "";
+        s.innerText = "TRANSMISIÓN DETENIDA";
+    }
 
-      function manejarReproduccion(radioKey) {
-        const actual = radios[radioKey];
-        const otras = Object.keys(radios).filter(k => k !== radioKey).map(k => radios[k]);
+    function setV(v) { audio.volume = v; }
+</script>
 
-        if (actual.audio.paused) {
-          actual.button.disabled = true;
-          actual.button.textContent = "Conectando...";
-          Promise.all(otras.map(r =>
-            !r.audio.paused ? new Promise(res => detenerRadio(r, res)) : Promise.resolve()
-          )).then(() => {
-            setTimeout(() => {
-              actual.audio.src = actual.url;
-              actual.audio.load();
-              actual.audio.play()
-                .then(() => {
-                  actual.button.textContent = `⏸ ${actual.nombre}`;
-                  actual.button.style.backgroundColor = "#4CAF50";
-                  actual.button.disabled = false;
-                })
-                .catch(error => {
-                  alert("Error al reproducir " + actual.nombre + ": " + error.message);
-                  actual.button.textContent = `▶ ${actual.nombre}`;
-                  actual.button.disabled = false;
-                });
-            }, 300);
-          });
-        } else {
-          detenerRadio(actual);
-        }
-      }
-
-      radios.nuevaQ.button.addEventListener('click', () => manejarReproduccion('nuevaQ'));
-      radios.exitosa.button.addEventListener('click', () => manejarReproduccion('exitosa'));
-      radios.rpp.button.addEventListener('click', () => manejarReproduccion('rpp'));
-    });
-  </script>
 </body>
 </html>
 
