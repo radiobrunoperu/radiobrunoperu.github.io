@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio Bruno Perú</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <img src="img/logobruno.png" alt="Radio Bruno Perú" class="left-logo">
+        <div class="header-text">
+            <h1>RADIO BRUNO PERÚ</h1>
+            <p>Las mejores emisoras en vivo con el mejor sonido</p>
+        </div>
+    </header>
+
+    <main class="radio-grid">
+        <div class="card" onclick="tocar('https://neptuno-2-audio.mediaserver.digital/79525baf-b0f5-4013-a8bd-3c5c293c6561', 'EXITOSA')">
+
+            <img src="img/exitosa.jpg" alt="Exitosa">
+            <b>RADIO EXITOSA</b>
+        </div>
+        <div class="card" onclick="tocar('	https://mdstrm.com/audio/5fab3416b5f9ef165cfab6e9/icecast.audio', 'RPP')">
+            <img src="img/rpp.png" alt="RPP">
+            <b>RPP NOTICIAS</b>
+        </div>
+        <div class="card" onclick="tocar('https://18493.live.streamtheworld.com/RADIO_NUEVA_Q_SC', 'NUEVA Q')">
+            <img src="img/nueva q.jpg" alt="Nueva Q">
+            <b>RADIO NUEVA Q</b>
+        </div>
+        <div class="card" onclick="tocar('https://19313.live.streamtheworld.com/PANAMERICANA_SC', 'PANAMERICANA')">
+            <img src="img/panamerica.webp" alt="Panamericana">
+            <b>PANAMERICANA</b>
+        </div>
+        <div class="card" onclick="tocar('https://17513.live.streamtheworld.com/RADIO_OXIGENO_SC', 'OXIGENO')">
+            <img src="img/oxigeno.jpg" alt="Oxigeno">
+            <b>RADIO OXÍGENO</b>
+        </div>
+
+        <div class="card" onclick="tocar('https://18313.live.streamtheworld.com/RADIO_STUDIO92_SC', 'STUDIO 92')">
+            <img src="img/studio92.png" alt="Studio 92">
+            <b>STUDIO 92</b>
+        </div>
+        <div class="card" onclick="tocar('https://19253.live.streamtheworld.com/RADIO_INOLVIDABLE_SC', 'LA INOLVIDABLE')">
+            <img src="img/inolvidable.png" alt="La Inolvidable">
+            <b>LA INOLVIDABLE</b>
+        </div>
+        <div class="card" onclick="tocar('https://radio.juanjuiserver.com:8060/radio.mp3', 'A1 CAÑETE')">
+            <img src="img/a1.png" alt="A1 Cañete">
+            <b>RADIO A1 CAÑETE</b>
+        </div>
+        <div class="card" onclick="tocar('https://19263.live.streamtheworld.com/RADIO_OVACION_SC', 'OVACION')">
+            <img src="img/ovacion.png" alt="Ovación">
+            <b>RADIO OVACIÓN</b>
+        </div>
+        <div class="card" onclick="tocar('https://stream.zeno.fm/66p6748u338uv', 'RADIO FAMA')">
+            <img src="img/fama.jpg" alt="Radio Fama">
+            <b>RADIO FAMA</b>
+        </div>
+    </main>
+
+    <footer class="player-bar">
+        <div id="estado">LISTO PARA ESCUCHAR</div>
+        <div class="controls">
+            <span class="vol-icon">🔈</span>
+            <input type="range" id="volumen" min="0" max="1" step="0.1" value="0.8">
+            <span class="vol-icon">🔊</span>
+            <button onclick="parar()">DETENER RADIO</button>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
