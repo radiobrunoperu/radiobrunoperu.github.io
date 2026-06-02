@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio Bruno Perú</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <img src="img/logobruno.png" alt="Radio Bruno Perú" class="left-logo">
+        <div class="header-text">
+            <h1>RADIO BRUNO PERÚ</h1>
+            <p>Las mejores emisoras en vivo con el mejor sonido</p>
+        </div>
+    </header>
+
+    <main class="radio-grid">
+        <div class="card" onclick="tocar('https://neptuno-2-audio.mediaserver.digital/79525baf-b0f5-4013-a8bd-3c5c293c6561', 'EXITOSA')">
+
+            <img src="img/exitosa.jpg" alt="Exitosa">
+            <b>RADIO EXITOSA</b>
+        </div>
+        <div class="card" onclick="tocar('https://mdstrm.com/audio/5fab3416b5f9ef165cfab6e9/icecast.audio', 'RPP')">
+            <img src="img/rpp.png" alt="RPP">
+            <b>RPP NOTICIAS</b>
+        </div>
+        <div class="card" onclick="tocar('https://mdstrm.com/audio/6839e1f153fcf56d988d5943/icecast.audio', 'NUEVA Q')">
+            <img src="img/nueva q.jpg" alt="Nueva Q">
+            <b>RADIO NUEVA Q</b>
+        </div>
+        <div class="card" onclick="tocar('https://mdstrm.com/audio/6598b62dded1380470f4e539/icecast.audio', 'PANAMERICANA')">
+            <img src="img/panamerica.webp" alt="Panamericana">
+            <b>PANAMERICANA</b>
+        </div>
+        <div class="card" onclick="tocar('https://mdstrm.com/audio/5fab0687bcd6c2389ee9480c/icecast.audio', 'OXIGENO')">
+            <img src="img/oxigeno.jpg" alt="Oxigeno">
+            <b>RADIO OXÍGENO</b>
+        </div>
+
+        <div class="card" onclick="tocar('https://mdstrm.com/audio/5fada553978fe1080e3ac5ea/icecast.audio', 'STUDIO 92')">
+            <img src="img/studio92.png" alt="Studio 92">
+            <b>STUDIO 92</b>
+        </div>
+        <div class="card" onclick="tocar('https://mdstrm.com/audio/6839e24cf4eacd81ada4e6b4/icecast.audio', 'LA INOLVIDABLE')">
+            <img src="img/inolvidable.png" alt="La Inolvidable">
+            <b>LA INOLVIDABLE</b>
+        </div>
+        <div class="card" onclick="tocar('https://radio.juanjuiserver.com:8060/radio.mp3', 'A1 CAÑETE')">
+            <img src="img/a1.png" alt="A1 Cañete">
+            <b>RADIO A1 CAÑETE</b>
+        </div>
+        <div class="card" onclick="tocar('https://5949aa132c8fb.streamlock.net:1963/ipradioovacion1/liveovacion1radio/playlist.m3u8', 'OVACION')">
+            <img src="img/ovacion.png" alt="Ovación">
+            <b>RADIO OVACIÓN</b>
+        </div>
+        <div class="card" onclick="tocar('https://servistream.info:9118/stream', 'RADIO FAMA')">
+            <img src="img/fama.jpg" alt="Radio Fama">
+            <b>RADIO FAMA</b>
+        </div>
+        <div class="card" onclick="tocar('https://mdstrm.com/audio/6839e28eb3fdc597ac2e2e43/icecast.audio', 'RADIO MAGICA')">
+            <img src="https://mmo.aiircdn.com/766/64637f9984614.png" alt="Radio Magica">
+            <b>RADIO MÁGICA</b>
+        </div>
+        <div class="card" onclick="tocar('https://mdstrm.com/audio/5fada56fe4e09508207a7951/icecast.audio', 'RADIO MEGAMIX')">
+            <img src="https://f.rpp-noticias.io/cutter/2022/11/28/1669651170.svg" alt="Radio Megamix">
+            <b>RADIO MEGAMIX</b>
+        </div>
+        <div class="card" onclick="tocar('https://mdstrm.com/audio/6839e1c82cc4c480fcd318dd/icecast.audio', 'RADIO MODA')">
+            <img src="https://mmo.aiircdn.com/766/6452a23bb515a.png" alt="Radio Moda">
+            <b>RADIO MODA</b>
+        </div>
+        <div class="card" onclick="tocar('https://mdstrm.com/audio/5fad731fcf097a068af3c8f7/icecast.audio', 'RADIO FELICIDAD')">
+            <img src="https://f.rpp-noticias.io/cutter/2024/06/19/1718805616.svg" alt="Radio Felicidad">
+            <b>RADIO FELICIDAD</b>
+        </div>
+        <div class="card" onclick="tocar('https://mdstrm.com/audio/6839e2376607bdf6b2fcde27/icecast.audio', 'RITMO ROMANTICA')">
+            <img src="https://mmo.aiircdn.com/766/6452bbfb28781.png" alt="Ritmo Romantica">
+            <b>RITMO ROMÁNTICA</b>
+        </div>
+    </main>
+
+    <footer class="player-bar">
+        <div id="estado">LISTO PARA ESCUCHAR</div>
+        <div class="controls">
+            <span class="vol-icon">🔈</span>
+            <input type="range" id="volumen" min="0" max="1" step="0.1" value="0.8">
+            <span class="vol-icon">🔊</span>
+            <button onclick="parar()">DETENER RADIO</button>
+        </div>
+    </footer>
+
+    <script src="hls.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
